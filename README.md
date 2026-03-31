@@ -1,9 +1,10 @@
 # airlock
-Safely cross environment trust boundaries.
+
+Cross environment trust boundaries, safely.
 
 **Status**: README-Driven-Development phase.
 
-Some braindumps on the idea here: https://github.com/shazow/shazow.net/issues/88 https://github.com/shazow/shazow.net/issues/87
+More braindumps on the idea here: https://github.com/shazow/shazow.net/issues/88 https://github.com/shazow/shazow.net/issues/87
 
 ## Premise
 
