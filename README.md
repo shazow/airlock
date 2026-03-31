@@ -3,7 +3,7 @@ Safely cross environment trust boundaries.
 
 **Status**: README-Driven-Development phase.
 
-Some braindumps on the idea here: https://github.com/shazow/shazow.net/issues/87
+Some braindumps on the idea here: https://github.com/shazow/shazow.net/issues/88 https://github.com/shazow/shazow.net/issues/87
 
 ## Premise
 
