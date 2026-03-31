@@ -65,7 +65,7 @@ It might be very long, but we'll truncate it after the first few lines
 
 Receive?
 - [ ] `README.md`
-- [Review | Drop | Merge] `my-feature-branch.git`  + `.md`
+- [ Review | Drop | Pick ] `my-feature-branch.git`  + `.md`
 - [~] `output.log`
 ```
 
@@ -79,10 +79,10 @@ We can also decouple the review process into an output similar to `git rebase -i
 #
 # It might be very long, but we'll truncate it after the first few lines
 # ... [truncated 2,810 bytes]
-drop README.md  # 2.8KB, 812 words
-pick my-feature-branch.git  # 6.4KB, +1432 -98 lines, 14 files changes
+drop README.md                 # 2.8KB, 812 words
+pick my-feature-branch.git     # 6.4KB, +1432 -98 lines, 14 files changes
 drop my-feature-branch.git.md  # 1.1KB, 294 words
-drop output.log  # 988 bytes, 89 lines
+drop output.log                # 988 bytes, 89 lines
 
 # Bundle review: ./bundle.airlock
 # Comments are ignored.
