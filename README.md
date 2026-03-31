@@ -40,13 +40,16 @@ Airlock is a protocol and tool for facilitating this workflow.
 Airlock is composed of an airlock bundle convention and tooling for dealing with it. We can imagine a variety of tools for transporting and reviewing bundles, so let's focus on the bundle convention that we can all converge around.
 
 - An airlock bundle is a tarball. It can be compressed or not.
-- All the paths are assumed to be relative to $HOME. The recipient can choose to extract under a different directory.
+- All the paths are assumed to be relative to `$HOME`. The recipient can choose to extract under a different directory.
 - Items inside the tarball are named to make it easy to target paths with glob/regexp to map to appropriate review tools. For example: "Review `*.md` with `bat`" or "Review `*.patch` with `$EDITOR`", this will need to become its own convention over time.
 - Top-level `README.md` will be reviewed/displayed first, it can include useful context for the reviewer.
 - Items inside the bundle can be accompanies with a corresponding `*.md` file to preface the corresponding review with additional context. For example: `my-feature-branch.patch` can be accompanied with `my-feature-branch.patch.md` to act as a coverletter for the patch.
 - Expect configs to be included in the bundle, such as `.codex/config.toml` or `.config/git/config` or `.config/airlock/config.toml`.
 - Expect assets like logs and images.
 
+We don't need special tools to do this, we can use `tar` and `scp` and `cat` to create bundles, transport them, and review them. The goal of `airlock` is to streamline this workflow, to make it more robust and powerful.
+
+It's important to keep the fundamentals simple so that we can always fall back to them if we need, or build our own better tools.
 
 ## License
 
