@@ -7,7 +7,7 @@ Some braindumps on the idea here: https://github.com/shazow/shazow.net/issues/88
 
 ## Premise
 
-Sandboxes are great, but giving them write access to the host disk is dangerous. What if the sandbox rewrites your git history and injects malware into the dependencies or into your unit tests, for next time you run it?
+Sandboxes are great, but giving them write access to the host disk is dangerous. What if the sandbox rewrites your git history and injects malware into the dependencies, or your unit tests, or your continuous integration, or something else for next time you run the code outside of the sandbox?
 
 We should treat development environment as opaque boxes of work. We send some state to work on, it does it in a dangerous way, then we receive some valuable byproduct that we must review before accepting into the host.
 
@@ -24,7 +24,7 @@ Airlock is a protocol and tool for facilitating this workflow.
 ## Features
 
 - [ ] `airlock bundle FILES... > bundle.airlock`
-- [ ] `airlock receive --path=./bundle.airlock --review=skip` (receiving via local path is compatible with readonly shared volumes and out-of-band transports)
+- [ ] `airlock receive --path=./bundle.airlock --review=skip --directory=$HOME` (receiving via local path is compatible with readonly shared volumes and out-of-band transports)
 - [ ] `airlock review --path=./bundle.airlock`
 - [ ] `airlock bundle | airlock send $MAGIC_CODE` powered by magic-wormhole-like discovery transport (built on libp2p?)
 - [ ] `airlock receive $MAGIC_CODE`
@@ -32,6 +32,21 @@ Airlock is a protocol and tool for facilitating this workflow.
 - [ ] `airlock.toml`: Configure bundle contents and bundling mode (e.g. use `git bundle` for git repos, specify branch somehow)
 - [ ] `airlock.toml`: Configure review tools per bundle item (e.g. `repo.bundle` should do something like [agentspace-import](https://github.com/shazow/agentspace/blob/34474e130f4efaae1d9d4be5fd8391ba4cdf0ea3/scripts/agentspace-import)).
 - [ ] `airlock review` option to promote git changes to a Github pull request (ideally forge-agnostic interface for supporting other forges later).
+- [ ] `airlock review` option to delegate to an automated review process (such as a coding agent, or a different kind of program)
+
+
+## Airlock Bundle Convention
+
+Airlock is composed of an airlock bundle convention and tooling for dealing with it. We can imagine a variety of tools for transporting and reviewing bundles, so let's focus on the bundle convention that we can all converge around.
+
+- An airlock bundle is a tarball. It can be compressed or not.
+- All the paths are assumed to be relative to $HOME. The recipient can choose to extract under a different directory.
+- Items inside the tarball are named to make it easy to target paths with glob/regexp to map to appropriate review tools. For example: "Review `*.md` with `bat`" or "Review `*.patch` with `$EDITOR`", this will need to become its own convention over time.
+- Top-level `README.md` will be reviewed/displayed first, it can include useful context for the reviewer.
+- Items inside the bundle can be accompanies with a corresponding `*.md` file to preface the corresponding review with additional context. For example: `my-feature-branch.patch` can be accompanied with `my-feature-branch.patch.md` to act as a coverletter for the patch.
+- Expect configs to be included in the bundle, such as `.codex/config.toml` or `.config/git/config` or `.config/airlock/config.toml`.
+- Expect assets like logs and images.
+
 
 ## License
 
