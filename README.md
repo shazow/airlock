@@ -92,6 +92,8 @@ drop output.log                  # 988 bytes, 89 lines
 
 Any tool can produce a review like this, then it can be piped into `airlock receive --path=./bundle.airlock --directory=~/projects/airlock --review=stdin < bundle.review`
 
+Or more simply: `echo "pick my-feature-branch.patch" | airlock receive --path=./bundle.airlock --directory=~/projects/airlock --review=stdin`
+
 TODO:
 - [ ] Include a way to specify additional review inside the editor mode, similar to `exec` mode.
 
