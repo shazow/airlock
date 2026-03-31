@@ -34,7 +34,6 @@ Airlock is a protocol and tool for facilitating this workflow.
 - [ ] `airlock review` option to promote git changes to a Github pull request (ideally forge-agnostic interface for supporting other forges later).
 - [ ] `airlock review` option to delegate to an automated review process (such as a coding agent, or a different kind of program)
 
-
 ## Airlock Bundle Convention
 
 Airlock is composed of an airlock bundle convention and tooling for dealing with it. We can imagine a variety of tools for transporting and reviewing bundles, so let's focus on the bundle convention that we can all converge around.
@@ -50,6 +49,52 @@ Airlock is composed of an airlock bundle convention and tooling for dealing with
 We don't need special tools to do this, we can use `tar` and `scp` and `cat` to create bundles, transport them, and review them. The goal of `airlock` is to streamline this workflow, to make it more robust and powerful.
 
 It's important to keep the fundamentals simple so that we can always fall back to them if we need, or build our own better tools.
+
+## Airlock Review
+
+Airlock will come with a native review TUI, here's a sketch of what it may look like:
+
+`airlock receive --path=./bundle.airlock --directory=~/projects/airlock --review=native`
+
+```
+README.md:
+This is a coverletter that was included in the bundle.
+
+It might be very long, but we'll truncate it after the first few lines
+... [Read more]
+
+Receive?
+- [ ] `README.md`
+- [Review | Drop | Merge] `my-feature-branch.git`  + `.md`
+- [~] `output.log`
+```
+
+We can also decouple the review process into an output similar to `git rebase -i` where each line decides if we pick the entry or not:
+
+`airlock review --path=./bundle.airlock --mode=editor`
+
+```
+# README.md:
+# This is a coverletter that was included in the bundle.
+#
+# It might be very long, but we'll truncate it after the first few lines
+# ... [truncated 2,810 bytes]
+drop README.md  # 2.8KB, 812 words
+pick my-feature-branch.git  # 6.4KB, +1432 -98 lines, 14 files changes
+drop my-feature-branch.git.md  # 1.1KB, 294 words
+drop output.log  # 988 bytes, 89 lines
+
+# Bundle review: ./bundle.airlock
+# Comments are ignored.
+# d, drop <path> = skip path from bundle
+# p, pick <path> = receive path
+```
+
+Any tool can produce a review like this, then it can be piped into `airlock receive --path=./bundle.airlock --directory=~/projects/airlock --review=stdin < bundle.review`
+
+TODO:
+- [ ] Include a way to specify additional review inside the editor mode, similar to `exec` mode.
+
 
 ## License
 
