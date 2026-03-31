@@ -24,12 +24,14 @@ Airlock is a protocol and tool for facilitating this workflow.
 ## Features
 
 - [ ] `airlock bundle FILES... > bundle.airlock`
-- [ ] `airlock receive --bundle=./bundle.airlock --review=skip`
-- [ ] `airlock review --bundle=./bundle.airlock`
-- [ ] `airlock bundle | airlock send $MAGIC_CODE`
+- [ ] `airlock receive --path=./bundle.airlock --review=skip` (receiving via local path is compatible with readonly shared volumes and out-of-band transports)
+- [ ] `airlock review --path=./bundle.airlock`
+- [ ] `airlock bundle | airlock send $MAGIC_CODE` powered by magic-wormhole-like discovery transport (built on libp2p?)
 - [ ] `airlock receive $MAGIC_CODE`
+- [ ] `airlock review` with native review TUI for reviewing git patchsets, git bundles, markdown, config payloads, and other state.
 - [ ] `airlock.toml`: Configure bundle contents and bundling mode (e.g. use `git bundle` for git repos, specify branch somehow)
 - [ ] `airlock.toml`: Configure review tools per bundle item (e.g. `repo.bundle` should do something like [agentspace-import](https://github.com/shazow/agentspace/blob/34474e130f4efaae1d9d4be5fd8391ba4cdf0ea3/scripts/agentspace-import)).
+- [ ] `airlock review` option to promote git changes to a Github pull request (ideally forge-agnostic interface for supporting other forges later).
 
 ## License
 
